@@ -32,43 +32,52 @@ class Stocks extends React.Component {
 
   render(){
     const dataSource = [
+
       {
-        key: "1",
-        name: "胡彦斌",
-        age: 32,
-        address: "西湖区湖底公园1号"
+        stock_id: 1,
+        name: "萬家香醬油(淡色)",
+        category: "醬油",
+        capacity: 5,
+        unit: "L",
+        maximum_quantity: 4
       },
-      {
-        key: "2",
-        name: "胡彦祖",
-        age: 42,
-        address: "西湖区湖底公园1号"
-      },
-      {
-        key: "3",
-        name: "胡彦梅",
-        age: 42,
-        address: "西湖区湖底公园1号"
-      }
+    {
+        stock_id: 2,
+        name: "萬家香醬油(濃色)",
+        category: "醬油",
+        capacity: 5,
+        unit: "L",
+        maximum_quantity: 4
+    }
     ];
   
     const columns = [
       {
-        title: "姓名",
+        title: "產品名稱",
         dataIndex: "name",
         key: "name",
         
       },
       {
-        title: "年龄",
-        dataIndex: "age",
-        key: "age",
+        title: "分類",
+        dataIndex: "category",
+        key: "category",
         
       },
       {
-        title: "住址",
-        dataIndex: "address",
-        key: "address",
+        title: "容量",
+        dataIndex: "capacity",
+        key: "capacity",
+      },
+      {
+        title: "單位",
+        dataIndex: "unit",
+        key: "unit",
+      },
+      {
+        title: "最大數量",
+        dataIndex: "maximum_quantity",
+        key: "maximum_quantity",
       },
       {
         title: "Action",
