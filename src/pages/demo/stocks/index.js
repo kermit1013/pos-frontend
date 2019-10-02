@@ -4,10 +4,11 @@ import {
   Card,
   Table,
   Popconfirm,
-  message
+  message,
+  Button
 } from "antd";
 
-export default function TablesPage() {
+export default function Stocks() {
 
   const dataSource = [
     {
@@ -66,14 +67,15 @@ export default function TablesPage() {
   return (
     <div>
       <Card className="card-wrap" title="庫存管理">
-        <Table dataSource={dataSource} columns={columns}  pagination={{
+      <Button type="primary">新建</Button>
+        <Table dataSource={dataSource} 
+        columns={columns}  
+        pagination={{
             defaultPageSize: 10,
             total: dataSource.length,
             pageSizeOptions: ["10", "20", "30", "40"],
-            showSizeChanger: true
           }}/>
       </Card>
-    
     </div>
   );
 }
