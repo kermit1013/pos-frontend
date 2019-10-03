@@ -8,15 +8,38 @@ import {
   Button
 } from "antd";
 import CreateForm from "./components/CreateForm"
+import axios from "@axios";
 
 class Stocks extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       modalVisible: false,
+      dataSource: [],
     };
-
   }
+
+  componentDidMount(){
+    this.getAllStocks();
+  }
+
+  getAllStocks(){
+    axios
+    .request({
+      url: "http://localhost:8080/stocks"
+    })
+    .then(res => {
+      console.log("res", res);
+      this.setState({
+        dataSource: res.data
+      })
+    })
+    .catch(error => {
+      console.log("error");
+      message.error("請求發生錯誤");
+    });
+  }
+
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
@@ -24,33 +47,27 @@ class Stocks extends React.Component {
   };
 
   handleAdd = (fields) => {
-    console.log(fields);
+    axios
+    .request({
+      url: "http://localhost:8080/stocks",
+      data: fields,
+      method:"post"
+    })
+    .then(res => {
+      console.log("res", res);
+      this.getAllStocks()
+      message.success("已成功新增");
+    })
+    .catch(error => {
+      console.log("error");
+      message.error("請求發生錯誤");
+    });
     this.handleModalVisible();
   };
 
 
 
   render(){
-    const dataSource = [
-
-      {
-        stock_id: 1,
-        name: "萬家香醬油(淡色)",
-        category: "醬油",
-        capacity: 5,
-        unit: "L",
-        maximum_quantity: 4
-      },
-    {
-        stock_id: 2,
-        name: "萬家香醬油(濃色)",
-        category: "醬油",
-        capacity: 5,
-        unit: "L",
-        maximum_quantity: 4
-    }
-    ];
-  
     const columns = [
       {
         title: "產品名稱",
@@ -83,10 +100,26 @@ class Stocks extends React.Component {
         title: "Action",
         key: "action",
         render: (text, record) =>
-          dataSource.length >= 1 ? (
+        this.state.dataSource.length >= 1 ? (
             <Popconfirm
               title="Sure to delete?"
-              onConfirm={() => message.success("模仿删除")}
+              onConfirm={() => {
+                console.log(text,record);
+                axios
+                .request({
+                  url: `http://localhost:8080/stocks/${record.stock_id}`,
+                  method:"delete"
+                })
+                .then(res => {
+                  console.log("res", res);
+                  this.getAllStocks()
+                  message.success("已成功删除")
+                })
+                .catch(error => {
+                  console.log("error");
+                  message.error("請求發生錯誤");
+                });
+              }}
             >
               <a href="">刪除</a>
             </Popconfirm>
@@ -103,11 +136,11 @@ class Stocks extends React.Component {
       <div>
         <Card className="card-wrap" title="庫存管理">
         <Button type="primary" onClick={()=>this.handleModalVisible(true)}>新增</Button>
-          <Table dataSource={dataSource} 
+          <Table dataSource={this.state.dataSource} 
           columns={columns}  
           pagination={{
               defaultPageSize: 10,
-              total: dataSource.length,
+              total: this.state.dataSource.length,
               pageSizeOptions: ["10", "20", "30", "40"],
             }}/>
         </Card>
