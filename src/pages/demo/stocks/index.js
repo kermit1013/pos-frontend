@@ -8,6 +8,7 @@ import {
   Button
 } from "antd";
 import CreateForm from "./components/CreateForm"
+import UploadComponent from "./components/UploadComponent"
 import axios from "@axios";
 
 class Stocks extends React.Component {
@@ -136,6 +137,7 @@ class Stocks extends React.Component {
       <div>
         <Card className="card-wrap" title="庫存管理">
         <Button type="primary" onClick={()=>this.handleModalVisible(true)}>新增</Button>
+        <UploadComponent />
           <Table dataSource={this.state.dataSource} 
           columns={columns}  
           pagination={{
