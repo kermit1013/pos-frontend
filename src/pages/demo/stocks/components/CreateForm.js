@@ -18,14 +18,14 @@ class CreateForm extends React.Component {
     };
 
   render(){
-    const { modalVisible, form, handleModalVisible } = this.props;
+    const { modalVisible, form, hab, handleCreateModalVisible } = this.props;
     return (
         <Modal
           destroyOnClose
           title="新增庫存"
           visible={modalVisible}
           onOk={this.okHandle}
-          onCancel={() => handleModalVisible()}
+          onCancel={() => handleCreateModalVisible()}
         >
           <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名稱">
           {form.getFieldDecorator('name', {

@@ -8,14 +8,15 @@ import {
   Button
 } from "antd";
 import CreateForm from "./components/CreateForm"
-import UploadComponent from "./components/UploadComponent"
+import UploadForm from "./components/UploadForm"
 import axios from "@axios";
 
 class Stocks extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      modalVisible: false,
+      createModalVisible: false,
+      uploadModalVisible: false,
       dataSource: [],
     };
   }
@@ -41,9 +42,14 @@ class Stocks extends React.Component {
     });
   }
 
-  handleModalVisible = (flag) => {
+  handleCreateModalVisible = (flag) => {
     this.setState({
-      modalVisible: !!flag,
+      createModalVisible: !!flag,
+    });
+  };
+  handleUploadModalVisible = (flag) => {
+    this.setState({
+      uploadModalVisible: !!flag,
     });
   };
 
@@ -127,17 +133,22 @@ class Stocks extends React.Component {
           ) : null
       }
     ];
-  const { modalVisible } = this.state;  
-  const parentMethods = {
+  const { createModalVisible, uploadModalVisible } = this.state;  
+  const createParentMethods = {
       handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
+      handleCreateModalVisible: this.handleCreateModalVisible,
   };
+
+  const uploadParentMethods = {
+    handleUploadModalVisible: this.handleUploadModalVisible,
+};
 
   return (
       <div>
         <Card className="card-wrap" title="庫存管理">
-        <Button type="primary" onClick={()=>this.handleModalVisible(true)}>新增</Button>
-        <UploadComponent />
+        <Button type="primary" onClick={()=>this.handleCreateModalVisible(true)}>新增</Button>
+        <Button type="dashed" onClick={()=>this.handleUploadModalVisible(true)}>匯入</Button>
+        
           <Table dataSource={this.state.dataSource} 
           columns={columns}  
           pagination={{
@@ -146,7 +157,9 @@ class Stocks extends React.Component {
               pageSizeOptions: ["10", "20", "30", "40"],
             }}/>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
+       
+        <CreateForm {...createParentMethods} modalVisible={createModalVisible} />
+        <UploadForm {...uploadParentMethods} modalVisible={uploadModalVisible} />
       </div>
     );
   }

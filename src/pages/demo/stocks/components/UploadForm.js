@@ -1,8 +1,13 @@
-import { Upload, Button, Icon, message } from 'antd';
+import { Upload, Button, Icon, message, Modal } from 'antd';
 import React from "react";
 import axios from "@axios";
 
 class UploadComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    
+}
+  
   state = {
     fileList: [],
     uploading: false,
@@ -44,6 +49,7 @@ class UploadComponent extends React.Component {
 
   render() {
     const { uploading, fileList } = this.state;
+    const { modalVisible, handleUploadModalVisible } = this.props;
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -65,6 +71,13 @@ class UploadComponent extends React.Component {
     };
 
     return (
+      <Modal
+      destroyOnClose
+      title="匯入庫存"
+      visible={modalVisible}
+      footer={null}
+      onCancel={() => handleUploadModalVisible()}
+    >
       <div>
         <Upload {...props}>
           <Button>
@@ -81,6 +94,7 @@ class UploadComponent extends React.Component {
           {uploading ? 'Uploading' : 'Start Upload'}
         </Button>
       </div>
+      </Modal>
     );
   }
 }
