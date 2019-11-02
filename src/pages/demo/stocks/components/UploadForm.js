@@ -15,6 +15,7 @@ class UploadComponent extends React.Component {
 
   handleUpload = () => {
     const { fileList } = this.state;
+    const { handleUploadModalVisible } = this.props;
     const formData = new FormData();
     fileList.forEach(file => {
       formData.append('file', file);
@@ -30,20 +31,19 @@ class UploadComponent extends React.Component {
       url: "http://localhost:8080/stocks/import",
       method: 'post',
       processData: false,
-      data: formData,
-      success: () => {
-        this.setState({
-          fileList: [],
-          uploading: false,
-        });
-        message.success('upload successfully.');
-      },
-      error: () => {
-        this.setState({
-          uploading: false,
-        });
-        message.error('upload failed.');
-      },
+      data: formData
+    })
+    .then(res => {
+      this.setState({
+        fileList: [],
+        uploading: false,
+      });
+      handleUploadModalVisible();
+      message.success('匯入成功!');
+    })
+    .catch(error => {
+      console.log("error");
+      message.error("請求發生錯誤");
     });
   };
 

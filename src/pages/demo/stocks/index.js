@@ -51,6 +51,7 @@ class Stocks extends React.Component {
     this.setState({
       uploadModalVisible: !!flag,
     });
+    this.getAllStocks();
   };
 
   handleAdd = (fields) => {
