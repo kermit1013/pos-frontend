@@ -28,7 +28,7 @@ class Stocks extends React.Component {
   getAllStocks(){
     axios
     .request({
-      url: "http://localhost:8080/stocks"
+      url: "http:///3.115.186.167:8081/api/stocks"
     })
     .then(res => {
       console.log("res", res);
@@ -37,7 +37,8 @@ class Stocks extends React.Component {
       })
     })
     .catch(error => {
-      console.log("error");
+
+      console.log(error);
       message.error("請求發生錯誤");
     });
   }
@@ -57,7 +58,7 @@ class Stocks extends React.Component {
   handleAdd = (fields) => {
     axios
     .request({
-      url: "http://localhost:8080/stocks",
+      url: "http:///3.115.186.167:8081/api/stocks",
       data: fields,
       method:"post"
     })
@@ -115,7 +116,7 @@ class Stocks extends React.Component {
                 console.log(text,record);
                 axios
                 .request({
-                  url: `http://localhost:8080/stocks/${record.stock_id}`,
+                  url: `http:///3.115.186.167:8081/api/stocks/${record.stock_id}`,
                   method:"delete"
                 })
                 .then(res => {

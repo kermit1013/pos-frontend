@@ -28,7 +28,7 @@ class UploadComponent extends React.Component {
     // You can use any AJAX library you like
     axios.
     request({
-      url: "http://localhost:8080/stocks/import",
+      url: "http://3.115.186.167:8081/api/stocks/import",
       method: 'post',
       processData: false,
       data: formData
